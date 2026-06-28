@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transactions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <!--font awesome-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <!--link to bootstrap css-->
+    <link rel="stylesheet" href="../css/styles.css"> <!--link to css-->
+</head>
+
+<body>
+    <header class="mb-5">
+        <nav id="nav-cont" class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <a id="alke-a" class="navbar-brand" href="menu.html">Alke Wallet</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="menu.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="deposit.html">Deposit</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="sendmoney.html">Send Money</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="transactions.html">Transactions</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="log-out-button" class="nav-link" href="login.html">Log out</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main id="send-money" class="d-flex flex-column align-items-center justify-content-center min-vh-100">
+        <!-- Balance -->
+        <section class="container">
+            <div class="row justify-content-center mb-5">
+                <div class="col-10 col-md-8">
+                    <div class="card wallet-balance shadow-sm">
+                        <div class="text-center">
+                            <h2>Balance</h2>
+                            <span class="balance"></span>
+                            <p class="mb-0">Current balance</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Message -->
+        <section class="container mb-4">
+            <div class="row justify-content-center">
+                <div class="col-10 col-md-6">
+                    <div id="message"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Form -->
+        <div class="card">
+            <div class="card-body">
+                <h3 class="text-center mb-3">Send Money</h3>
+                <form id="formSend">
+                    <div class="mb-3">
+                        <label>Send to:</label>
+                        <input type="text" id="recipient" class="form-control" placeholder="Search user..."
+                            autocomplete="off">
+                        <div id="userList" class="list-group mt-1"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Amount</label>
+                        <input type="number" class="form-control" id="amount" min="1" required>
+                    </div>
+                    <button type="submit" class="btn btn-dark w-100">Send Money</button>
+                </form>
+            </div>
+        </div>
+
+        <script>
+            // Initialize balance
+            if (localStorage.getItem("balance") === null) {
+                localStorage.setItem("balance", 100000);
+            }
+            let balance = Number(localStorage.getItem("balance"));
+            document.querySelector(".balance").textContent =
+                "$" + balance.toLocaleString("es-CL");
+
+            const form = document.getElementById("formSend");
+            const messageElement = document.getElementById("message");
+            const recipientInput = document.getElementById("recipient");
+            const userList = document.getElementById("userList");
+
+            // Demo users
+            const demoUsers = ["Alice", "Bob", "Carlos", "Daniela", "Eva"];
+
+            // Show suggestions
+            recipientInput.addEventListener("input", function () {
+                const query = recipientInput.value.toLowerCase();
+                userList.innerHTML = "";
+                if (query.length > 0) {
+                    demoUsers
+                        .filter(user => user.toLowerCase().includes(query))
+                        .forEach(user => {
+                            const item = document.createElement("button");
+                            item.type = "button";
+                            item.className = "list-group-item list-group-item-action";
+                            item.textContent = user;
+                            item.addEventListener("click", () => {
+                                recipientInput.value = user;
+                                userList.innerHTML = "";
+                            });
+                            userList.appendChild(item);
+                        });
+                }
+            });
+
+            // Handle send money
+            form.addEventListener("submit", function (event) {
+                event.preventDefault();
+                const recipient = recipientInput.value.trim();
+                const amount = parseInt(document.getElementById("amount").value);
+                let balance = Number(localStorage.getItem("balance")) || 0;
+
+                if (recipient && amount > 0 && amount <= balance) {
+                    balance -= amount;
+                    localStorage.setItem("balance", balance);
+
+                    // Save transaction
+                    const transactions = JSON.parse(localStorage.getItem("transactions")) || [];
+                    transactions.push({
+                        type: "send",
+                        to: recipient,
+                        amount: amount,
+                        date: new Date().toLocaleString()
+                    });
+                    localStorage.setItem("transactions", JSON.stringify(transactions));
+
+                    document.querySelector(".balance").textContent =
+                        "$" + balance.toLocaleString("es-CL");
+
+                    messageElement.innerHTML = `
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            Sent $${amount.toLocaleString("es-CL")} to ${recipient}.<br>
+            New balance: $${balance.toLocaleString("es-CL")}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        `;
+                } else {
+                    messageElement.innerHTML = `
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            Invalid recipient or amount. Make sure you have enough balance.
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        `;
+                }
+
+                form.reset();
+                userList.innerHTML = "";
+            });
+        </script>F
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+            crossorigin="anonymous"></script> <!--bootstrap javascript-->
+</body>
+
+</html>

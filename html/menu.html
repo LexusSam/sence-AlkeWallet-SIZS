@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <!--font awesome-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <!--link to bootstrap css-->
+    <link rel="stylesheet" href="../css/styles.css"> <!--link to css-->
+</head>
+
+<body>
+    <header class="mb-5">
+        <nav id="nav-cont" class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <a id="alke-a" class="navbar-brand" href="menu.html">Alke Wallet</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="menu.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="deposit.html">Deposit</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="sendmoney.html">Send Money</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="transactions.html">Transactions</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="log-out-button" class="nav-link" href="login.html">Log out</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main id="menu">
+        <!--Wallet balance card-->
+        <section class="container">
+            <div class="row justify-content-center mb-5">
+                <div class="col-10 col-md-8">
+                    <div class="card wallet-balance shadow-sm">
+                        <div class="text-center">
+                            <h2>Balance</h2>
+                            <span class="balance"></span>
+                            <p class="mb-0">Current balance</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--Navigation section-->
+        <section class="container">
+            <div class="row justify-content-center gap-4 gap-md-0">
+                <!--Deposit card-->
+                <div class="col-10 col-md-4 col-lg-3">
+                    <div class="card text-center shadow-sm">
+                        <div class="card-body">
+                            <h3>Deposit</h3>
+                            <p>Transfer money to your virtual wallet</p>
+                            <a href="deposit.html" class="btn btn-dark">Add money</a>
+                        </div>
+                    </div>
+                </div>
+                <!--Send Money card-->
+                <div class="'col-10 col-md-4 col-lg-3">
+                    <div class="card text-center shadow-sm">
+                        <div class="card-body">
+                            <h3>Send Money</h3>
+                            <p>Transfer money to your contacts</p>
+                            <a href="sendmoney.html" class="btn btn-dark">Send money</a>
+                        </div>
+                    </div>
+                </div>
+                <!--Transaction card-->
+                <div class="'col-10 col-md-4 col-lg-3">
+                    <div class="card text-center shadow-sm">
+                        <div class="card-body">
+                            <h3>Transactions</h3>
+                            <p>Keep track of your ins and out in one place</p>
+                            <a href="transactions.html" class="btn btn-dark">Go to Transactions</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!--Footer-->
+    <footer class="text-center">
+        <p>© 2026 - <em>Alke Wallet</em></p>
+    </footer>
+
+    <script>
+/*this makes the balance show on the screen*/
+        if (localStorage.getItem("balance") === null) {
+            localStorage.setItem("balance", 100000);
+        }
+
+        let balance = Number(localStorage.getItem("balance"));
+        document.querySelector(".balance").textContent =
+            "$" + balance.toLocaleString("es-CL");
+    </script><!--javascript script-->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script> <!--bootstrap javascript-->
+    <script src="script.js">
+    </script> <!--javascript script-->
+</body>
+
+</html>

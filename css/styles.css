@@ -1,0 +1,158 @@
+/*general styles*/
+@import url('https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&family=Stack+Sans+Notch:wght@200..700&display=swap');
+
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background-image: linear-gradient(35deg, #8e82fe, #fff) !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: Stack Sans Notch, sans-serif;
+	font-weight: bold !important;
+	color: rgb(54, 56, 109) !important;
+}
+
+/*nav bar css*/
+
+header #nav-cont {
+	border-radius: 20px;
+	z-index: 2;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 30%);
+}
+
+header #alke-a {
+	font-family: Stack Sans Notch, sans-serif;
+	font-weight: bold !important;
+	color: rgb(54, 56, 109) !important;
+	font-size: 25px;
+}
+
+header #alke-a:hover {
+	background-color: white !important;
+}
+
+header nav a {
+	font-family: Stack Sans Notch, sans-serif;
+	font-weight: bold !important;
+	color: rgb(54, 56, 109) !important;
+	text-align: center;
+
+}
+
+header nav a:hover {
+	border-radius: 20px;
+	background-color: #c0b9ff;
+}
+
+#log-out-button {
+	font-family: Stack Sans Notch, sans-serif;
+	font-weight: bold !important;
+	color: rgb(136, 51, 51) !important;
+	border: 1px solid rgb(136, 51, 51);
+	border-radius: 20px;
+}
+
+#log-out-button:hover {
+	background-color: rgb(172, 87, 87) !important;
+	border: 1px solid rgb(136, 51, 51);
+	color: white !important;
+}
+
+/*main menu css*/
+
+#menu {
+	flex-direction: column;
+	padding: 100px 0;
+}
+
+.balance {
+	font-size: 40px;
+	font-weight: 800;
+	font-family: Stack Sans Notch, sans-serif;
+}
+
+/*index css*/
+
+header {
+	height: 8vh;
+	position: relative;
+	padding: 10px;
+}
+
+.btn.btn-dark {
+	border: none;
+	min-width: 200px;
+	border-radius: 20px;
+	background-color: rgb(54, 56, 109);
+	font-family: Stack Sans Notch, sans-serif;
+}
+
+.btn.btn-dark:hover {
+	transform: scale(1.05);
+	background-color: rgb(54, 56, 109);
+	border: none;
+	color: #fff;
+
+}
+
+.btn.btn-light {
+	border: none;
+	min-width: 200px;
+	border-radius: 20px;
+	background-color: rgb(255, 255, 255);
+	font-family: Stack Sans Notch, sans-serif;
+}
+
+.btn.btn-light:hover {
+	transform: scale(1.1);
+	background-color: rgb(255, 255, 255);
+	border: none;
+	color: #000;
+}
+
+/*login css*/
+
+label {
+	font-family: Arimo, sans-serif;
+	font-weight: 500;
+	color: #000 !important;
+}
+
+main {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 87vh;
+}
+
+input {
+	box-shadow: 0 0 10px rgba(0, 0, 0, 30%);
+}
+
+/*footer*/
+
+footer {
+	height: 5vh;
+}
+
+footer p {
+	text-align: center;
+	padding-top: 1vh;
+	font-family: Arimo, sans-serif;
+}
+
+@media (max-width: 756px) {
+	#menu {
+		height: 100%;
+	}
+}
