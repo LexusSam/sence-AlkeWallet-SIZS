@@ -103,7 +103,7 @@
     </footer>
 
     <script>
-        /*this makes the balance show on the screen*/
+/*this makes the balance show on the screen*/
         if (localStorage.getItem("balance") === null) {
             localStorage.setItem("balance", 100000);
         }
@@ -111,6 +111,8 @@
         let balance = Number(localStorage.getItem("balance"));
         document.querySelector(".balance").textContent =
             "$" + balance.toLocaleString("es-CL");
+
+/*this allows to send the money*/
 
         const form = document.getElementById("formSend");
         const messageElement = document.getElementById("message");
@@ -124,6 +126,14 @@
             if (amount > 0 && amount <= balance) {
                 balance -= amount; // subtract from balance
                 localStorage.setItem("balance", balance);
+                let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
+                transactions.push({
+                    type: "send",
+                    recipient: recipient,
+                    amount: amount,
+                    date: new Date().toLocaleString()
+                });
+                localStorage.setItem("transactions", JSON.stringify(transactions));
 
                 messageElement.innerHTML = `
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -132,8 +142,8 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
         `;
-                document.querySelector(".balance").textContent =
-                    "$" + balance.toLocaleString("es-CL");
+            document.querySelector(".balance").textContent =
+                "$" + balance.toLocaleString("es-CL");
             } else {
                 messageElement.innerHTML = `
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
