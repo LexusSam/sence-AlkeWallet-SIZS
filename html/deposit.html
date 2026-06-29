@@ -6,11 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Deposit</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
-    <!--font awesome-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <!--link to bootstrap css-->
-    <link rel="stylesheet" href="../css/styles.css"> <!--link to css-->
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
 
 <body>
@@ -44,8 +42,8 @@
             </div>
         </nav>
     </header>
+
     <main id="deposit-money" class="d-flex flex-column align-items-center justify-content-center min-vh-100">
-        <!-- Balance -->
         <section class="container">
             <div class="row justify-content-center mb-5">
                 <div class="col-10 col-md-8">
@@ -59,8 +57,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- Message -->
         <section class="container mb-4">
             <div class="row justify-content-center">
                 <div class="col-10 col-md-6">
@@ -68,8 +64,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- Deposit Form -->
         <section class="container">
             <div class="row justify-content-center">
                 <div class="col-10 col-md-8">
@@ -90,63 +84,7 @@
         </section>
     </main>
 
-    <script>
-        /*esto hace aparecer el saldo en la pantalla*/
-        if (localStorage.getItem("balance") === null) {
-            localStorage.setItem("balance", 100000);
-        }
-
-        let balance = Number(localStorage.getItem("balance"));
-        document.querySelector(".balance").textContent =
-            "$" + balance.toLocaleString("es-CL");
-
-        const form = document.getElementById("formDeposito");
-        const mensajeElement = document.getElementById("mensaje");
-
-        form.addEventListener("submit", function (event) {
-            event.preventDefault();
-
-            const amount = parseInt(document.getElementById("montoDeposito").value);
-
-            if (amount > 0) {
-                //saca el saldo actual del localStorage
-                let balance = Number(localStorage.getItem("balance")) || 0;
-
-                balance += amount;
-                localStorage.setItem("balance", balance);
-
-                // guarda el deposito en la pantalla transacciones
-                let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
-                transactions.push({
-                    type: "deposit",
-                    recipient: "Self", // el deposito va para la cuenta propia
-                    amount: amount,
-                    date: new Date().toLocaleString()
-                });
-                localStorage.setItem("transactions", JSON.stringify(transactions));
-
-                mensajeElement.innerHTML = `
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    Deposit successful! +$${amount.toLocaleString("es-CL")}<br>
-                    New balance: $${balance.toLocaleString("es-CL")}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div> 
-            `; // este mensaje se mostrara cuando el deposito sea completado con exito
-                document.querySelector(".balance").textContent =
-                    "$" + balance.toLocaleString("es-CL");
-            } else {
-                mensajeElement.innerHTML = `
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    Please enter a valid amount.
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
-            `;// este mensaje se mostrara cuando el deposito tenga un error
-            }
-
-            form.reset();
-        });
-    </script>
-    <!--javascript script-->
+    <script src="../js/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>

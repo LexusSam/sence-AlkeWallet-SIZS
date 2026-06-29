@@ -6,11 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Send Money</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
-    <!--font awesome-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <!--link a bootstrap css-->
-    <link rel="stylesheet" href="../css/styles.css"> <!--link a css-->
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
 
 <body>
@@ -46,7 +44,6 @@
     </header>
 
     <main id="send-money" class="d-flex flex-column align-items-center justify-content-center min-vh-100">
-        <!-- Balance -->
         <section class="container">
             <div class="row justify-content-center mb-5">
                 <div class="col-10 col-md-8">
@@ -60,8 +57,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- Message -->
         <section class="container mb-4">
             <div class="row justify-content-center">
                 <div class="col-10 col-md-6">
@@ -69,8 +64,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- Form -->
         <section class="container">
             <div class="row justify-content-center">
                 <div class="col-10 col-md-8">
@@ -98,70 +91,14 @@
         </section>
     </main>
 
-    <!--Footer-->
     <footer class="text-center">
         <p>© 2026 - <em>Alke Wallet</em></p>
     </footer>
 
-    <script>
-/*esto hace que el saldo se muestre en pantalla actualizado*/
-        if (localStorage.getItem("balance") === null) {
-            localStorage.setItem("balance", 100000);
-        }
-
-        let balance = Number(localStorage.getItem("balance"));
-        document.querySelector(".balance").textContent =
-            "$" + balance.toLocaleString("es-CL");
-
-/*esto permite que se hagan depositos*/
-
-        const form = document.getElementById("formSend");
-        const messageElement = document.getElementById("message");
-
-        form.addEventListener("submit", function (event) {
-            event.preventDefault();
-
-            const recipient = document.getElementById("recipient").value;
-            const amount = parseInt(document.getElementById("amount").value);
-
-            if (amount > 0 && amount <= balance) {
-                balance -= amount; // subtract from balance
-                localStorage.setItem("balance", balance);
-                let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
-                transactions.push({
-                    type: "send",
-                    recipient: recipient,
-                    amount: amount,
-                    date: new Date().toLocaleString()
-                });
-                localStorage.setItem("transactions", JSON.stringify(transactions));
-/*esto genera un mensaje informando que se realizo con exito y muestra el monto actualizado en el mensaje*/
-                messageElement.innerHTML = `
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-        Sent $${amount.toLocaleString("es-CL")} to ${recipient}.<br>
-        New balance: $${balance.toLocaleString("es-CL")}
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-        `;
-/*esto actualiza el saldo en pantalla*/
-            document.querySelector(".balance").textContent =
-                "$" + balance.toLocaleString("es-CL");
-            } else {
-/*esto genera un mensaje de error cuando el monto es invalido*/
-                messageElement.innerHTML = `
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        Invalid amount. Make sure you have enough balance.
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-        `;
-            }
-/*resetea la forma para poder depositar mas dinero*/
-            form.reset();
-        });
-    </script><!--javascript script-->
+    <script SRC="../js/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-        crossorigin="anonymous"></script> <!--bootstrap javascript-->
+        crossorigin="anonymous"></script>
 </body>
 
 </html>
