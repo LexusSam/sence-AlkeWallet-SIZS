@@ -89,8 +89,9 @@
             </div>
         </section>
     </main>
+
     <script>
-        /*this makes the balance show on the screen*/
+        /*esto hace aparecer el saldo en la pantalla*/
         if (localStorage.getItem("balance") === null) {
             localStorage.setItem("balance", 100000);
         }
@@ -108,17 +109,17 @@
             const amount = parseInt(document.getElementById("montoDeposito").value);
 
             if (amount > 0) {
-                // Get current balance from localStorage
+                //saca el saldo actual del localStorage
                 let balance = Number(localStorage.getItem("balance")) || 0;
 
                 balance += amount;
                 localStorage.setItem("balance", balance);
 
-                // ✅ Save deposit transaction
+                // guarda el deposito en la pantalla transacciones
                 let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
                 transactions.push({
                     type: "deposit",
-                    recipient: "Self", // deposits go to yourself
+                    recipient: "Self", // el deposito va para la cuenta propia
                     amount: amount,
                     date: new Date().toLocaleString()
                 });
@@ -129,8 +130,8 @@
                     Deposit successful! +$${amount.toLocaleString("es-CL")}<br>
                     New balance: $${balance.toLocaleString("es-CL")}
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
-            `;
+                </div> 
+            `; // este mensaje se mostrara cuando el deposito sea completado con exito
                 document.querySelector(".balance").textContent =
                     "$" + balance.toLocaleString("es-CL");
             } else {
@@ -139,7 +140,7 @@
                     Please enter a valid amount.
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
-            `;
+            `;// este mensaje se mostrara cuando el deposito tenga un error
             }
 
             form.reset();
