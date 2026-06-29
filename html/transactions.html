@@ -63,11 +63,13 @@
     </footer>
 
     <script>
+/*declara la variable de transaccion y saca el valor e informacion del almacenamiento local si no existe la crea en un array vacio*/
         const transactions = JSON.parse(localStorage.getItem("transactions")) || [];
         const transactionList = document.getElementById("transactionList");
-
+/*si no hay transacciones el mensaje sera mostrado*/
         if (transactions.length === 0) {
             transactionList.innerHTML = `<div class="alert alert-info">No transactions yet.</div>`;
+/*en el caso de tener movimeintos en la cuenta estos seran mostrados con nombre fecha y hora mas el monto*/
         } else {
             transactions.forEach(tx => {
                 const item = document.createElement("div");
@@ -76,7 +78,7 @@
                 let label = tx.type === "deposit"
                     ? `<strong>Deposit</strong><br><small>${tx.date}</small>`
                     : `<strong>To:</strong> ${tx.recipient}<br><small>${tx.date}</small>`;
-
+/*muestra el monto retirado en color verde*/
                 let badgeClass = tx.type === "deposit" ? "bg-primary" : "bg-success";
 
                 item.innerHTML = `
@@ -86,7 +88,7 @@
     </span>
     `;
                 transactionList.appendChild(item);
-            }); // <-- properly closes the forEach loop
+            }); /* <-- cerrar apropiadamente el forEach loop*/
         }
 
     </script>

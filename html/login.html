@@ -42,34 +42,34 @@
     </footer>
 
     <script>
+/*previene que el boton haga submit por defecto*/
         document.getElementById("form-login").addEventListener("submit", function (event) {
             event.preventDefault();
-
+/* declarar variable y asignarle valor*/
             const username = document.getElementById("username").value;
             const password = document.getElementById("password").value;
-
+/*declarar variable y darle acceso al almacenamiento local, si no existe, lo crea*/
             const users = JSON.parse(localStorage.getItem("users")) || [];
-
+/*declarar variable y darle una funcion para comparar input y data guardada*/
             const userFound = users.find(function (user) {
                 return user.username === username && user.password === password;
-
+/*condicional que toma el usuario del almacenamiento si esta loggeado previamente*/
             })
+/*si el condicional es true, genera mensaje de exito y redirecciona a la pagina de menu*/
             if (userFound) {
-
                 localStorage.setItem("userLogged", JSON.stringify(userFound))
-
                 document.getElementById("message").innerHTML = `
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                 Successfully logged in. Redirecting...
                 <button type="button" class="btn btn-close" data-bs-dismiss="alert"></button>
                 </div>
                 `;
-
+/*retrasa el proceso 3 segundos para dar la oportunidad de ver el mensaje de exito*/
                 setTimeout(() => {
                     window.location.href = "menu.html";
                 }, 3000);
-
             }
+/*si el condicional es false, genera mensaje de error de usuario o password incorrectas*/
             else {
                 document.getElementById("message").innerHTML = `
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -77,12 +77,14 @@
                 <button type="button" class="btn btn-close" data-bs-dismiss="alert"></button>
                 </div>
                 `
-
+/*retrasa el proceso 3 segundos para dar la oportunidad de ver el mensaje de error*/
                 setTimeout(() => {
                     document.getElementById("message").innerHTML = "";
                 }, 3000);
             }
-        })
+/*resetea el formulario*/
+        form.reset();
+    });
     </script><!--javascript script-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"

@@ -103,7 +103,7 @@
     </footer>
 
     <script>
-/*this makes the balance show on the screen*/
+/*esto hace que el saldo sea reflejado en pantalla*/
         if (localStorage.getItem("balance") === null) {
             localStorage.setItem("balance", 100000);
         }
@@ -112,7 +112,7 @@
         document.querySelector(".balance").textContent =
             "$" + balance.toLocaleString("es-CL");
 
-/*this allows to send the money*/
+/*declare variable y permite enviar dinero*/
 
         const form = document.getElementById("formSend");
         const messageElement = document.getElementById("message");
@@ -124,7 +124,7 @@
             const amount = parseInt(document.getElementById("amount").value);
 
             if (amount > 0 && amount <= balance) {
-                balance -= amount; // subtract from balance
+                balance -= amount; /*esto hace que se quite el mando del saldo actual*/
                 localStorage.setItem("balance", balance);
                 let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
                 transactions.push({
@@ -134,7 +134,7 @@
                     date: new Date().toLocaleString()
                 });
                 localStorage.setItem("transactions", JSON.stringify(transactions));
-
+/*mensaje de exito, actualiza saldo*/
                 messageElement.innerHTML = `
         <div class="alert alert-success alert-dismissible fade show" role="alert">
         Sent $${amount.toLocaleString("es-CL")} to ${recipient}.<br>
@@ -144,6 +144,7 @@
         `;
             document.querySelector(".balance").textContent =
                 "$" + balance.toLocaleString("es-CL");
+/*mensaje de error si no tiene szaldo suficiente*/
             } else {
                 messageElement.innerHTML = `
         <div class="alert alert-danger alert-dismissible fade show" role="alert">

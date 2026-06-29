@@ -1,15 +1,13 @@
-/*REGISTER*/
-
 document.getElementById("form-register").addEventListener("submit", function (event) {
     event.preventDefault();
 
-    /*declare and assign a value*/
+    /*declarar la variable y asignarle el valor sacado del input*/
     const name = document.getElementById("name").value;
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
     const confirmPassword = document.getElementById("confirm_password").value;
 
-    /*password validation*/
+    /*validacion de password*/
     if (password !== confirmPassword) {
         document.getElementById("message").innerHTML = `
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -19,13 +17,13 @@ document.getElementById("form-register").addEventListener("submit", function (ev
         `
         return;
     };
-    /*add new user */
+    /*agregar usuario nuevo */
     const newUser = {
         name,
         username,
         password
     }
-    /*storage new user in local storage*/
+    /*guardar a nuevo usuario en el almacenamiento local*/
     let users = JSON.parse(localStorage.getItem("users")) || [];
 
     users.push(newUser);

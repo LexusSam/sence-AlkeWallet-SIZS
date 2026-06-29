@@ -90,7 +90,7 @@
         </section>
     </main>
     <script>
-        /*this makes the balance show on the screen*/
+/*esto hace que el saldo sea reflejado en pantalla*/
         if (localStorage.getItem("balance") === null) {
             localStorage.setItem("balance", 100000);
         }
@@ -98,7 +98,7 @@
         let balance = Number(localStorage.getItem("balance"));
         document.querySelector(".balance").textContent =
             "$" + balance.toLocaleString("es-CL");
-
+/*declarar variable sacada del formulario de deposito*/
         const form = document.getElementById("formDeposito");
         const mensajeElement = document.getElementById("mensaje");
 
@@ -108,22 +108,22 @@
             const amount = parseInt(document.getElementById("montoDeposito").value);
 
             if (amount > 0) {
-                // Get current balance from localStorage
+                /* saca el saldo actual*/
                 let balance = Number(localStorage.getItem("balance")) || 0;
 
                 balance += amount;
                 localStorage.setItem("balance", balance);
 
-                // ✅ Save deposit transaction
+                /*guarda el deposito en la pagina de transacciones*/
                 let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
                 transactions.push({
                     type: "deposit",
-                    recipient: "Self", // deposits go to yourself
+                    recipient: "Self", /*el deposito es recibido por uno mismo*/
                     amount: amount,
                     date: new Date().toLocaleString()
                 });
                 localStorage.setItem("transactions", JSON.stringify(transactions));
-
+/*mensaje de deposito exitoso, y actualiza el saldo*/
                 mensajeElement.innerHTML = `
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     Deposit successful! +$${amount.toLocaleString("es-CL")}<br>
@@ -133,6 +133,7 @@
             `;
                 document.querySelector(".balance").textContent =
                     "$" + balance.toLocaleString("es-CL");
+/*mensaje de deposito incorrecto, resetea el formulario*/
             } else {
                 mensajeElement.innerHTML = `
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
